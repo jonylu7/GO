@@ -26,6 +26,23 @@ class Board():
                     adjacent_opposite_color.append(neighbor)
         new_string=GoString(player,[point],liberties)
 
+        for same_color_string in adjacent_same_color:
+            new_string=new_string.merged_with(same_color_string)
+
+        for new_string_point in new_string.stones:
+            self._grid[new_string_point]=new_string
+
+        for opposite_color_string in adjacent_opposite_color:
+            opposite_color_string.remove_liberty(point)
+
+        for opposite_color_string in adjacent_opposite_color:
+            if(opposite_color_string.num_liberties==0):
+                self._remove_string(opposite_color_string)
+
+    def _remove_string(self,string):
+        for point in string.stones:
+            for neighbor in point.neighbors():
+                    # something
 
 
     def is_on_grid(self,point):
