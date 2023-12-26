@@ -42,20 +42,24 @@ class Board():
     def _remove_string(self,string):
         for point in string.stones:
             for neighbor in point.neighbors():
-                    # something
+                neighbor_strings=self._grid.get(neighbor)
+                if(neighbor_strings is None):
+                    return None
+                else:
+                    neighbor_strings.add_liberty(point)
 
 
     def is_on_grid(self,point):
         return (1<=point.row<=self.num_rows) and (1<=point.col<=self.num_cols)
 
-    def get_go_string(self,point):
+    def get_go_string(self,point)->GoString:
         string=self._grid.get(point)
         if(string is None):
             return None
         else:
             return string
 
-    def get(self,point):
+    def get(self,point)->GoString.color:
         string=self._grid.get(point)
         if(string is None):
             return None
